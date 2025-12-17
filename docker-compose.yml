@@ -3,30 +3,30 @@ version: "3.9"
 services:
   db:
     image: postgis/postgis:16-3.4
-    container_name: adsp_mds_db
+    container_name: adsp_mds_demaniodigitale_db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: adsp
-      POSTGRES_PASSWORD: adsp_password
-      POSTGRES_DB: adsp_mds
+      POSTGRES_USER: adspadmin
+      POSTGRES_PASSWORD: Nexus2025!
+      POSTGRES_DB: adsp_mds_demaniodigitale
     ports:
       - "5432:5432"
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - adsp_mds_demaniodigitale_db_data:/var/lib/postgresql/data
 
   api:
     build:
       context: ./backend/AdspMds.Api
       dockerfile: Dockerfile
-    container_name: adsp_mds_api
+    container_name: adsp_mds_demaniodigitale_api
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__DefaultConnection: Host=db;Port=5432;Database=adsp_mds;Username=adsp;Password=adsp_password
-      Jwt__Key: ${JWT_KEY:-SuperSecretDevelopmentKeyChangeMe!}
-      Jwt__Issuer: AdspMds.Identity
-      Jwt__Audience: AdspMds.Client
+      ConnectionStrings__DefaultConnection: Host=db;Port=5432;Database=adsp_mds_demaniodigitale;Username=adspadmin;Password=Nexus2025!
+      Jwt__Key: 5n9kV1Aq3Lx2Rz7Hf4Qp8sDd0Jt6eKcN
+      Jwt__Issuer: identity.demaniodigitale.adspmaredisardegna.it
+      Jwt__Audience: demaniodigitale.adspmaredisardegna.it
       Seed__AdminEmail: admin@local.test
-      Seed__AdminPassword: ${ADMIN_PASSWORD:-ChangeMe123!}
+      Seed__AdminPassword: Nexus2025!
       DOTNET_USE_POLLING_FILE_WATCHER: "1"
     depends_on:
       - db
@@ -41,7 +41,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: adsp_mds_frontend
+    container_name: adsp_mds_demaniodigitale_frontend
     environment:
       NODE_ENV: development
     ports:
@@ -50,13 +50,13 @@ services:
       - api
     volumes:
       - ./frontend:/app
-      - frontend-node-modules:/app/node_modules
+      - adsp_mds_demaniodigitale_frontend_node_modules:/app/node_modules
     working_dir: /app
     command: ["npm", "run", "start", "--", "--host", "0.0.0.0", "--port", "4200", "--disable-host-check"]
 
   pgadmin:
     image: dpage/pgadmin4:8
-    container_name: adsp_mds_pgadmin
+    container_name: adsp_mds_demaniodigitale_pgadmin
     restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@local.test
@@ -67,5 +67,5 @@ services:
       - db
 
 volumes:
-  db-data:
-  frontend-node-modules:
+  adsp_mds_demaniodigitale_db_data:
+  adsp_mds_demaniodigitale_frontend_node_modules:
