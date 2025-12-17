@@ -13,8 +13,17 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         base.OnModelCreating(builder);
 
+        builder.Entity<ApplicationUser>(entity => entity.ToTable("AspNetUsers", "auth"));
+        builder.Entity<IdentityRole>(entity => entity.ToTable("AspNetRoles", "auth"));
+        builder.Entity<IdentityUserRole<string>>(entity => entity.ToTable("AspNetUserRoles", "auth"));
+        builder.Entity<IdentityUserClaim<string>>(entity => entity.ToTable("AspNetUserClaims", "auth"));
+        builder.Entity<IdentityUserLogin<string>>(entity => entity.ToTable("AspNetUserLogins", "auth"));
+        builder.Entity<IdentityRoleClaim<string>>(entity => entity.ToTable("AspNetRoleClaims", "auth"));
+        builder.Entity<IdentityUserToken<string>>(entity => entity.ToTable("AspNetUserTokens", "auth"));
+
         builder.Entity<UserPermission>(entity =>
         {
+            entity.ToTable("UserPermissions", "auth");
             entity.HasKey(p => p.Id);
             entity.Property(p => p.Permission).IsRequired().HasMaxLength(128);
             entity.HasIndex(p => new { p.UserId, p.Permission }).IsUnique();
