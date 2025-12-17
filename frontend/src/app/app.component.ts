@@ -81,7 +81,7 @@ export class AppComponent implements OnInit {
 
   loadUsers(): void {
     this.http
-      .get<{ id: string; email: string; displayName?: string }[]>(`${this.apiBase}/api/admin/users`)
+      .get<{ id: string; email: string; displayName?: string }[]>(`${this.apiBase}/admin/users`)
       .pipe(
         tap(() => (this.statusMessage = '')),
         catchError((err) => {
@@ -94,7 +94,7 @@ export class AppComponent implements OnInit {
 
   loadReports(): void {
     this.http
-      .get(`${this.apiBase}/api/reports/summary`)
+      .get(`${this.apiBase}/reports/summary`)
       .pipe(
         tap(() => (this.statusMessage = '')),
         catchError((err) => {

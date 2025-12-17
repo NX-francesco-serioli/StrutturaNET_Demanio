@@ -251,7 +251,7 @@ static async Task EnsureDatabaseAsync(IServiceProvider services, IConfiguration 
     }
 
     var adminEmail = configuration["Seed:AdminEmail"] ?? "admin@local.test";
-    var adminPassword = configuration["Seed:AdminPassword"] ?? "ChangeMe123!";
+    var adminPassword = configuration["Seed:AdminPassword"] ?? "Nexus2025!";
     var admin = await userManager.FindByEmailAsync(adminEmail);
 
     if (admin is null)
