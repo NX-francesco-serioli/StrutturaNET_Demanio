@@ -1,0 +1,105 @@
+<div class="page">
+  <header>
+    <div>
+      <p class="eyebrow">AdSP MdS • Minimal stack</p>
+      <h1>Identity + API + Angular</h1>
+      <p class="subtitle">
+        API .NET 9 con Identity/Postgres e frontend Angular in un unico docker-compose.
+      </p>
+    </div>
+
+    <div class="status" *ngIf="user$ | async as auth; else anon">
+      <p class="eyebrow">Sessione attiva</p>
+        <h3>{{ auth.user.displayName || auth.user.email }}</h3>
+        <p class="muted">Ruoli: {{ auth.user.roles.join(', ') || '—' }}</p>
+        <p class="muted">Permessi: {{ auth.user.permissions.join(', ') || '—' }}</p>
+        <button type="button" class="ghost" (click)="logout()">Logout</button>
+      </div>
+      <ng-template #anon>
+        <div class="status muted-box">
+          <p class="eyebrow">Nessuna sessione</p>
+          <h3>Effettua login per testare le API</h3>
+          <p class="muted">Admin seed: admin&#64;local.test / ChangeMe123!</p>
+        </div>
+      </ng-template>
+  </header>
+
+  <section class="grid">
+    <div class="card">
+      <h2>Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="handleLogin()" class="stack">
+        <label>
+          <span>Email</span>
+          <input type="email" formControlName="email" placeholder="admin&#64;local.test" />
+        </label>
+        <label>
+          <span>Password</span>
+          <input type="password" formControlName="password" placeholder="ChangeMe123!" />
+        </label>
+        <button type="submit">Accedi</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Nuovo utente (solo Admin)</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="handleRegister()" class="stack">
+        <label>
+          <span>Email</span>
+          <input type="email" formControlName="email" placeholder="utente&#64;example.com" />
+        </label>
+        <label>
+          <span>Password</span>
+          <input type="password" formControlName="password" placeholder="almeno 6 caratteri" />
+        </label>
+        <label>
+          <span>Nome visibile</span>
+          <input type="text" formControlName="displayName" placeholder="Nome e cognome" />
+        </label>
+        <label>
+          <span>Ruoli (CSV)</span>
+          <input type="text" formControlName="roles" placeholder="Admin,User" />
+        </label>
+        <label>
+          <span>Permessi (CSV)</span>
+          <input type="text" formControlName="permissions" placeholder="permissions.manage_users" />
+        </label>
+        <button type="submit">Crea utente</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="card wide">
+    <div class="card-header">
+      <div>
+        <p class="eyebrow">Chiamate protette</p>
+        <h2>Test API</h2>
+      </div>
+      <div class="actions">
+        <button type="button" class="ghost" (click)="loadUsers()">Lista utenti (Admin)</button>
+        <button type="button" class="ghost" (click)="loadReports()">Report (permesso)</button>
+      </div>
+    </div>
+
+    <div class="status-line" *ngIf="statusMessage">
+      {{ statusMessage }}
+    </div>
+
+    <div class="grid two">
+      <div>
+        <h3>Utenti</h3>
+        <div class="pill muted" *ngIf="adminUsers.length === 0">Nessun dato caricato.</div>
+        <div class="list" *ngIf="adminUsers.length">
+          <div class="pill" *ngFor="let user of adminUsers">
+            <strong>{{ user.email }}</strong>
+            <span>{{ user.displayName || '—' }}</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>Report demo</h3>
+        <pre *ngIf="reportSummary as report">{{ report | json }}</pre>
+        <div class="pill muted" *ngIf="!reportSummary">Premi "Report" per generare un esempio.</div>
+      </div>
+    </div>
+  </section>
+</div>
