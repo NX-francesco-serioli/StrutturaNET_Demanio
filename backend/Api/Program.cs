@@ -1,10 +1,12 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AdSPMdS.DemanioDigitale.Application;
 using AdSPMdS.DemanioDigitale.Api.Auth;
 using AdSPMdS.DemanioDigitale.Api.Contracts;
 using AdSPMdS.DemanioDigitale.Api.Data;
 using AdSPMdS.DemanioDigitale.Api.Models;
+using AdSPMdS.DemanioDigitale.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +18,8 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+builder.Services.AddApplication();
+builder.Services.AddPersistence();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new Exception("DefaultConnection not found");
