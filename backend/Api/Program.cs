@@ -1,11 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using AdSPMdS.DemanioDigitale.Application;
-using AdSPMdS.DemanioDigitale.Api.Auth;
 using AdSPMdS.DemanioDigitale.Api.Contracts;
-using AdSPMdS.DemanioDigitale.Api.Data;
-using AdSPMdS.DemanioDigitale.Api.Models;
+using AdSPMdS.DemanioDigitale.Application;
+using AdSPMdS.DemanioDigitale.Application.Models;
+using AdSPMdS.DemanioDigitale.Domain.Auth;
+using AdSPMdS.DemanioDigitale.Domain.Entities;
 using AdSPMdS.DemanioDigitale.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -19,37 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 builder.Services.AddApplication();
-builder.Services.AddPersistence();
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new Exception("DefaultConnection not found");
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString, npgsql => npgsql.UseNetTopologySuite()));
-
-builder.Services
-    .AddIdentityCore<ApplicationUser>(options =>
-    {
-        options.Password.RequireDigit = false;
-        options.Password.RequireNonAlphanumeric = false;
-        options.Password.RequireUppercase = false;
-        options.Password.RequireLowercase = false;
-        options.Password.RequiredLength = 6;
-    })
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddSignInManager()
-    .AddDefaultTokenProviders();
-
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy(Permissions.ManageUsers, policy =>
-        policy.RequireRole(Roles.Admin)
-              .RequireClaim(Permissions.PermissionClaimType, Permissions.ManageUsers));
-
-    options.AddPolicy(Permissions.ViewReports, policy =>
-        policy.RequireClaim(Permissions.PermissionClaimType, Permissions.ViewReports));
-});
+builder.Services.AddPersistence(builder.Configuration);
 
 var jwtSection = builder.Configuration.GetSection("Jwt");
 var jwtOptions = jwtSection.Get<JwtOptions>() ?? new JwtOptions();
@@ -344,6 +314,6 @@ static async Task<AuthResponse> BuildTokenAsync(
             user.Id,
             user.Email ?? string.Empty,
             user.DisplayName,
-            roles,
+            roles.ToArray(),
             permissions));
 }

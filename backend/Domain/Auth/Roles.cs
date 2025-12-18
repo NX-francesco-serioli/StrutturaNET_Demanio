@@ -1,4 +1,4 @@
-namespace AdSPMdS.DemanioDigitale.Api.Auth;
+namespace AdSPMdS.DemanioDigitale.Domain.Auth;
 
 public static class Roles
 {
