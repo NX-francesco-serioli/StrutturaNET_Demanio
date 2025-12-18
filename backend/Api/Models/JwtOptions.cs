@@ -1,4 +1,4 @@
-namespace AdspMds.Api.Models;
+namespace AdSPMdS.DemanioDigitale.Api.Models;
 
 public class JwtOptions
 {

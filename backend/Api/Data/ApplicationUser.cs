@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace AdspMds.Api.Data;
+namespace AdSPMdS.DemanioDigitale.Api.Data;
 
 public class ApplicationUser : IdentityUser
 {

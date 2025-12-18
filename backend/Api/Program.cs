@@ -1,10 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using AdspMds.Api.Auth;
-using AdspMds.Api.Contracts;
-using AdspMds.Api.Data;
-using AdspMds.Api.Models;
+using AdSPMdS.DemanioDigitale.Api.Auth;
+using AdSPMdS.DemanioDigitale.Api.Contracts;
+using AdSPMdS.DemanioDigitale.Api.Data;
+using AdSPMdS.DemanioDigitale.Api.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

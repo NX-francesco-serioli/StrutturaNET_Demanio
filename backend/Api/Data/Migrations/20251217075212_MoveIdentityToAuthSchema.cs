@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AdspMds.Api.Data.Migrations
+namespace AdSPMdS.DemanioDigitale.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class MoveIdentityToAuthSchema : Migration

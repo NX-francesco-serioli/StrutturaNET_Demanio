@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AdspMds.Api.Contracts;
+namespace AdSPMdS.DemanioDigitale.Api.Contracts;
 
 public record RegisterRequest(
     [Required][EmailAddress] string Email,

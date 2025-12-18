@@ -13,7 +13,7 @@ var db = builder.AddContainer("db", "postgis/postgis", "16-3.4")
         isProxied: false)
     .WithVolume("adsp_mds_data", "/var/lib/postgresql/data");
 
-var api = builder.AddProject<Projects.AdspMds_Api>("api")
+var api = builder.AddProject<Projects.Api>("api")
     .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")
     .WithEnvironment(
         "ConnectionStrings__DefaultConnection",

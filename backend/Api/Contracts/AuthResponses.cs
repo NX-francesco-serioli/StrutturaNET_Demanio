@@ -1,4 +1,4 @@
-namespace AdspMds.Api.Contracts;
+namespace AdSPMdS.DemanioDigitale.Api.Contracts;
 
 public record AuthResponse(
     string Token,

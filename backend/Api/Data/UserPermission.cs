@@ -1,4 +1,4 @@
-namespace AdspMds.Api.Data;
+namespace AdSPMdS.DemanioDigitale.Api.Data;
 
 public class UserPermission
 {

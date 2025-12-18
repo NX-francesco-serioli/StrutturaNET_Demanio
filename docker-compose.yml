@@ -16,7 +16,7 @@ services:
 
   api:
     build:
-      context: ./backend/AdspMds.Api
+      context: ./backend/Api
       dockerfile: Dockerfile
     container_name: adsp_mds_demaniodigitale_api
     environment:
@@ -33,7 +33,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./backend/AdspMds.Api:/src
+      - ./backend/Api:/src
     working_dir: /src
     command: ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:8080"]
 

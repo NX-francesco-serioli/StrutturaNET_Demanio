@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\backend\AdspMds.Api\AdspMds.Api.csproj" />
+    <ProjectReference Include="..\backend\Api\Api.csproj" />
   </ItemGroup>
 
 </Project>
