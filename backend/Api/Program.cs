@@ -13,7 +13,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 RegisterServices(builder);
-ConfigureSwagger(builder.Services);
 
 var app = builder.Build();
 
@@ -48,6 +47,7 @@ void RegisterServices(WebApplicationBuilder appBuilder)
     appBuilder.Services.AddApplication();
     appBuilder.Services.AddPersistence(appBuilder.Configuration);
     appBuilder.Services.AddJwtAuthentication(appBuilder.Configuration);
+    appBuilder.Services.AddSwaggerDocumentation();
 
     appBuilder.Services.AddCors(options =>
     {
@@ -61,44 +61,6 @@ void RegisterServices(WebApplicationBuilder appBuilder)
                 .AllowCredentials();
         });
     });
-}
-
-void ConfigureSwagger(IServiceCollection services)
-{
-    services.AddEndpointsApiExplorer();
-    services.AddSwaggerGen(options =>
-    {
-        options.SwaggerDoc("v1", new OpenApiInfo
-        {
-            Title = "AdSP-MdS API",
-            Version = "v1"
-        });
-
-        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        {
-            Description = "JWT Authorization header using the Bearer scheme.",
-            Name = "Authorization",
-            In = ParameterLocation.Header,
-            Type = SecuritySchemeType.Http,
-            Scheme = "bearer"
-        });
-
-        options.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                },
-                Array.Empty<string>()
-            }
-        });
-    });
-    services.AddOpenApi();
 }
 
 static async Task EnsureDatabaseAsync(IServiceProvider services, IConfiguration configuration)
