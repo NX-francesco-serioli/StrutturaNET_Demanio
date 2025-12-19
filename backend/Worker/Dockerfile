@@ -3,17 +3,15 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0
 WORKDIR /src
 
 COPY Directory.Packages.props ./
-COPY backend/Api/Api.csproj backend/Api/
+COPY backend/Worker/Worker.csproj backend/Worker/
 COPY backend/Application/Application.csproj backend/Application/
 COPY backend/Domain/Domain.csproj backend/Domain/
 COPY backend/Persistence/Persistence.csproj backend/Persistence/
 
-RUN dotnet restore backend/Api/Api.csproj
+RUN dotnet restore backend/Worker/Worker.csproj
 
 COPY backend ./backend
 
-WORKDIR /src/backend/Api
+WORKDIR /src/backend/Worker
 
-EXPOSE 8080
-
-CMD ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:8080"]
+CMD ["dotnet", "watch", "run"]

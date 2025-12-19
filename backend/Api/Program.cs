@@ -1,11 +1,14 @@
 using AdSPMdS.DemanioDigitale.Api.Endpoints;
 using AdSPMdS.DemanioDigitale.Api.Configuration;
 using AdSPMdS.DemanioDigitale.Application;
+using AdSPMdS.DemanioDigitale.Application.Options;
 using AdSPMdS.DemanioDigitale.Domain.Auth;
 using AdSPMdS.DemanioDigitale.Domain.Entities;
 using AdSPMdS.DemanioDigitale.Persistence;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 
@@ -48,6 +51,22 @@ void RegisterServices(WebApplicationBuilder appBuilder)
     appBuilder.Services.AddPersistence(appBuilder.Configuration);
     appBuilder.Services.AddJwtAuthentication(appBuilder.Configuration);
     appBuilder.Services.AddSwaggerDocumentation();
+    appBuilder.Services.AddOptions<RabbitMqOptions>()
+        .Bind(appBuilder.Configuration.GetSection("RabbitMq"))
+        .ValidateDataAnnotations();
+    appBuilder.Services.AddMassTransit(cfg =>
+    {
+        cfg.SetKebabCaseEndpointNameFormatter();
+        cfg.UsingRabbitMq((context, bus) =>
+        {
+            var options = context.GetRequiredService<IOptions<RabbitMqOptions>>().Value;
+            bus.Host(options.Host, options.VirtualHost, h =>
+            {
+                h.Username(options.Username);
+                h.Password(options.Password);
+            });
+        });
+    });
 
     appBuilder.Services.AddCors(options =>
     {

@@ -7,6 +7,9 @@ using AdSPMdS.DemanioDigitale.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using AdSPMdS.DemanioDigitale.Application.Events;
+using AdSPMdS.DemanioDigitale.Application.Options;
+using MassTransit;
 using AdSPMdS.DemanioDigitale.Api.Contracts;
 
 namespace AdSPMdS.DemanioDigitale.Api.Endpoints;
@@ -17,7 +20,8 @@ public static class AuthEndpoints
     {
         routes.MapPost("/api/auth/register", async (
             RegisterRequest request,
-            UserManager<ApplicationUser> userManager) =>
+            UserManager<ApplicationUser> userManager,
+            IPublishEndpoint publishEndpoint) =>
         {
             var user = new ApplicationUser
             {
@@ -47,6 +51,17 @@ public static class AuthEndpoints
                         new Claim(Permissions.PermissionClaimType, permission));
                 }
             }
+
+            var roles = request.Roles ?? Array.Empty<string>();
+            var permissions = request.Permissions?.Distinct().ToArray() ?? Array.Empty<string>();
+
+            await publishEndpoint.Publish(new UserRegisteredEvent(
+                user.Id,
+                user.Email ?? string.Empty,
+                user.DisplayName,
+                roles,
+                permissions,
+                DateTime.UtcNow));
 
             return Results.Created($"/api/users/{user.Id}", new { user.Id, user.Email, user.DisplayName });
         }).RequireAuthorization(Permissions.ManageUsers)

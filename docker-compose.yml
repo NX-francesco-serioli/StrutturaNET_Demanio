@@ -14,10 +14,25 @@ services:
     volumes:
       - adsp_mds_demaniodigitale_db_data:/var/lib/postgresql/data
 
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: adsp_mds_demaniodigitale_rabbitmq
+    restart: unless-stopped
+    command: >
+      sh -c "rabbitmq-plugins enable --offline rabbitmq_shovel rabbitmq_shovel_management && rabbitmq-server"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: Nexus2025!
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - adsp_mds_demaniodigitale_rabbitmq_data:/var/lib/rabbitmq
+
   api:
     build:
-      context: ./backend/Api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: backend/Api/Dockerfile
     container_name: adsp_mds_demaniodigitale_api
     environment:
       ASPNETCORE_ENVIRONMENT: Development
@@ -27,14 +42,19 @@ services:
       Jwt__Audience: demaniodigitale.adspmaredisardegna.it
       Seed__AdminEmail: admin@local.test
       Seed__AdminPassword: Nexus2025!
+      RabbitMq__Host: rabbitmq
+      RabbitMq__Username: admin
+      RabbitMq__Password: Nexus2025!
+      RabbitMq__VirtualHost: /
       DOTNET_USE_POLLING_FILE_WATCHER: "1"
     depends_on:
       - db
+      - rabbitmq
     ports:
       - "8080:8080"
     volumes:
-      - ./backend/Api:/src
-    working_dir: /src
+      - ./:/src
+    working_dir: /src/backend/Api
     command: ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:8080"]
 
   frontend:
@@ -65,6 +85,26 @@ services:
     ports:
       - "443:443"
 
+  worker:
+    build:
+      context: .
+      dockerfile: backend/Worker/Dockerfile
+    container_name: adsp_mds_demaniodigitale_worker
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      RabbitMq__Host: rabbitmq
+      RabbitMq__Username: admin
+      RabbitMq__Password: Nexus2025!
+      RabbitMq__VirtualHost: /
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ./:/src
+    working_dir: /src/backend/Worker
+    command: ["dotnet", "watch", "run"]
+
 volumes:
   adsp_mds_demaniodigitale_db_data:
   adsp_mds_demaniodigitale_frontend_node_modules:
+  adsp_mds_demaniodigitale_rabbitmq_data:
