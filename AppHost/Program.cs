@@ -1,6 +1,7 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
 var db = builder.AddContainer("db", "postgis/postgis", "16-3.4")
+    .WithContainerName("adsp_mds_demaniodigitale_db")
     .WithEnvironment("POSTGRES_USER", "adspadmin")
     .WithEnvironment("POSTGRES_PASSWORD", "Nexus2025!")
     .WithEnvironment("POSTGRES_DB", "adsp_mds_demaniodigitale")
@@ -14,6 +15,7 @@ var db = builder.AddContainer("db", "postgis/postgis", "16-3.4")
     .WithVolume("adsp_mds_data", "/var/lib/postgresql/data");
 
 var rabbit = builder.AddContainer("rabbitmq", "rabbitmq", "3.13-management")
+    .WithContainerName("adsp_mds_demaniodigitale_rabbitmq")
     .WithEnvironment("RABBITMQ_DEFAULT_USER", "admin")
     .WithEnvironment("RABBITMQ_DEFAULT_PASS", "Nexus2025!")
     .WithEntrypoint("sh")
