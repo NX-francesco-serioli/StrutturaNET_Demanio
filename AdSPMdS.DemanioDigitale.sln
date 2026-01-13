@@ -22,6 +22,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Packages.props = Directory.Packages.props
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Global
@@ -128,5 +129,8 @@ Global
 		{EA86B9A1-5A52-491E-86F3-25D27F041728} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
 		{52162B2C-51E4-4765-BC30-388C96019C3B} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
 		{7C22E353-1E0B-4E3F-82D2-3F8C211CBEB9} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9933262B-98AA-4449-8E96-89C4944E6D6B}
 	EndGlobalSection
 EndGlobal
