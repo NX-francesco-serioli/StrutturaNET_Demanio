@@ -11,6 +11,7 @@ Questo repository contiene una soluzione full-stack con backend .NET, frontend A
 - Domain: entita', value object e regole di business.
 - Persistence: accesso dati (EF Core, Postgres/PostGIS).
 - ServiceDefaults: configurazioni comuni (telemetria, health checks, service discovery).
+- Storage allegati: Azure Blob Storage (in locale tramite Azurite).
 
 ### Frontend
 - Client Angular (SPA) con login, gestione utenti e schermate demo.
@@ -55,4 +56,5 @@ docker compose down
 - Auth: ASP.NET Identity + JWT.
 - Realtime: SignalR Hub `/hubs/notifications`.
 - Email: outbox su DB + worker asincrono (provider esterno da configurare).
+- Storage: Azure Blob (Azurite in locale).
 

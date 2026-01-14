@@ -24,6 +24,15 @@ var rabbit = builder.AddContainer("rabbitmq", "rabbitmq", "3.13-management")
     .WithEndpoint(name: "ui", targetPort: 15672, scheme: "http", isExternal: true, isProxied: false)
     .WithVolume("adsp_mds_demaniodigitale_rabbitmq_data_local", "/var/lib/rabbitmq");
 
+var azurite = builder.AddContainer("azurite", "mcr.microsoft.com/azure-storage/azurite")
+    .WithEntrypoint("azurite-blob")
+    .WithArgs("--blobHost", "0.0.0.0", "--blobPort", "10000", "--location", "/data")
+    .WithEnvironment(
+        "AZURITE_ACCOUNTS",
+        "devstoreaccount1:Eby8vdM02xNOcqFeqCnrw1EAzJ8Zb4zTqscM5t8c5aDU4a0xY4mFZ7WmSX9M4S8e2Y3C3XKkY9Smy+qQx1rLxA==")
+    .WithEndpoint(name: "blob", targetPort: 10000, port: 10000, scheme: "http", isExternal: true, isProxied: false)
+    .WithVolume("adsp_mds_demaniodigitale_azurite_data_local", "/data");
+
 var api = builder.AddProject<Projects.Api>("api")
     .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")
     .WithEnvironment(
@@ -38,8 +47,13 @@ var api = builder.AddProject<Projects.Api>("api")
     .WithEnvironment("RabbitMq__Username", "admin")
     .WithEnvironment("RabbitMq__Password", "Nexus2025!")
     .WithEnvironment("RabbitMq__VirtualHost", "/")
+    .WithEnvironment(
+        "Storage__ConnectionString",
+        "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFeqCnrw1EAzJ8Zb4zTqscM5t8c5aDU4a0xY4mFZ7WmSX9M4S8e2Y3C3XKkY9Smy+qQx1rLxA==;BlobEndpoint=http://localhost:10000/devstoreaccount1;")
+    .WithEnvironment("Storage__ContainerName", "attachments")
     .WaitFor(db)
-    .WaitFor(rabbit);
+    .WaitFor(rabbit)
+    .WaitFor(azurite);
 
 var worker = builder.AddProject<Projects.Worker>("worker")
     .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")

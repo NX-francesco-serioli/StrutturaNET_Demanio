@@ -2,6 +2,8 @@ using AdSPMdS.DemanioDigitale.Api.Endpoints;
 using AdSPMdS.DemanioDigitale.Api.Configuration;
 using AdSPMdS.DemanioDigitale.Api.Consumers;
 using AdSPMdS.DemanioDigitale.Api.Hubs;
+using AdSPMdS.DemanioDigitale.Api.Options;
+using AdSPMdS.DemanioDigitale.Api.Storage;
 using AdSPMdS.DemanioDigitale.Application;
 using AdSPMdS.DemanioDigitale.Application.Options;
 using AdSPMdS.DemanioDigitale.Domain.Auth;
@@ -47,6 +49,7 @@ void MapApiEndpoints(WebApplication webApp)
     webApp.MapAuthEndpoints();
     webApp.MapAdminEndpoints();
     webApp.MapReportsEndpoints();
+    webApp.MapStorageEndpoints();
 }
 
 void RegisterServices(WebApplicationBuilder appBuilder)
@@ -56,6 +59,9 @@ void RegisterServices(WebApplicationBuilder appBuilder)
     appBuilder.Services.AddJwtAuthentication(appBuilder.Configuration);
     appBuilder.Services.AddSwaggerDocumentation();
     appBuilder.Services.AddSignalR();
+    appBuilder.Services.AddOptions<StorageOptions>()
+        .Bind(appBuilder.Configuration.GetSection("Storage"));
+    appBuilder.Services.AddSingleton<BlobStorageService>();
     appBuilder.Services.AddOptions<RabbitMqOptions>()
         .Bind(appBuilder.Configuration.GetSection("RabbitMq"))
         .ValidateDataAnnotations();

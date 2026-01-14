@@ -29,6 +29,18 @@ services:
     volumes:
       - adsp_mds_demaniodigitale_rabbitmq_data:/var/lib/rabbitmq
 
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    container_name: adsp_mds_demaniodigitale_azurite
+    command: >
+      azurite-blob --blobHost 0.0.0.0 --blobPort 10000 --location /data
+    environment:
+      AZURITE_ACCOUNTS: devstoreaccount1:Eby8vdM02xNOcqFeqCnrw1EAzJ8Zb4zTqscM5t8c5aDU4a0xY4mFZ7WmSX9M4S8e2Y3C3XKkY9Smy+qQx1rLxA==
+    ports:
+      - "10000:10000"
+    volumes:
+      - adsp_mds_demaniodigitale_azurite_data:/data
+
   api:
     build:
       context: .
@@ -46,9 +58,12 @@ services:
       RabbitMq__Username: admin
       RabbitMq__Password: Nexus2025!
       RabbitMq__VirtualHost: /
+      Storage__ConnectionString: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFeqCnrw1EAzJ8Zb4zTqscM5t8c5aDU4a0xY4mFZ7WmSX9M4S8e2Y3C3XKkY9Smy+qQx1rLxA==;BlobEndpoint=http://azurite:10000/devstoreaccount1;
+      Storage__ContainerName: attachments
     depends_on:
       - db
       - rabbitmq
+      - azurite
     ports:
       - "8080:8080"
     volumes:
@@ -107,5 +122,6 @@ volumes:
   adsp_mds_demaniodigitale_db_data:
   adsp_mds_demaniodigitale_frontend_node_modules:
   adsp_mds_demaniodigitale_rabbitmq_data:
+  adsp_mds_demaniodigitale_azurite_data:
 
 
