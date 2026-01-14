@@ -16,4 +16,7 @@ public class RabbitMqOptions
     public string Password { get; set; } = "guest";
 
     public string UserRegisteredQueue { get; set; } = "demaniodigitale-user-registered";
+
+    public string UserRegisteredNotificationsQueue { get; set; } =
+        "demaniodigitale-user-registered-notifications";
 }

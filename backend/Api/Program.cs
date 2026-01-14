@@ -1,5 +1,7 @@
 using AdSPMdS.DemanioDigitale.Api.Endpoints;
 using AdSPMdS.DemanioDigitale.Api.Configuration;
+using AdSPMdS.DemanioDigitale.Api.Consumers;
+using AdSPMdS.DemanioDigitale.Api.Hubs;
 using AdSPMdS.DemanioDigitale.Application;
 using AdSPMdS.DemanioDigitale.Application.Options;
 using AdSPMdS.DemanioDigitale.Domain.Auth;
@@ -34,6 +36,8 @@ app.UseAuthorization();
 
 MapApiEndpoints(app);
 
+app.MapHub<NotificationsHub>("/hubs/notifications").RequireAuthorization();
+
 app.MapDefaultEndpoints();
 
 app.Run();
@@ -51,12 +55,14 @@ void RegisterServices(WebApplicationBuilder appBuilder)
     appBuilder.Services.AddPersistence(appBuilder.Configuration);
     appBuilder.Services.AddJwtAuthentication(appBuilder.Configuration);
     appBuilder.Services.AddSwaggerDocumentation();
+    appBuilder.Services.AddSignalR();
     appBuilder.Services.AddOptions<RabbitMqOptions>()
         .Bind(appBuilder.Configuration.GetSection("RabbitMq"))
         .ValidateDataAnnotations();
     appBuilder.Services.AddMassTransit(cfg =>
     {
         cfg.SetKebabCaseEndpointNameFormatter();
+        cfg.AddConsumer<UserRegisteredNotificationConsumer>();
         cfg.UsingRabbitMq((context, bus) =>
         {
             var options = context.GetRequiredService<IOptions<RabbitMqOptions>>().Value;
@@ -64,6 +70,11 @@ void RegisterServices(WebApplicationBuilder appBuilder)
             {
                 h.Username(options.Username);
                 h.Password(options.Password);
+            });
+
+            bus.ReceiveEndpoint(options.UserRegisteredNotificationsQueue, endpoint =>
+            {
+                endpoint.ConfigureConsumer<UserRegisteredNotificationConsumer>(context);
             });
         });
     });

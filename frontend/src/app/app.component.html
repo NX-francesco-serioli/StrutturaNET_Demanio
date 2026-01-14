@@ -24,6 +24,31 @@
       </ng-template>
   </header>
 
+  <section class="card notifications">
+    <div class="card-header">
+      <div>
+        <p class="eyebrow">Realtime</p>
+        <h2>Notifiche live</h2>
+      </div>
+      <div class="muted">Aggiornate solo mentre l'app è aperta</div>
+    </div>
+
+    <ng-container *ngIf="notifications$ | async as notifications; else noNotifications">
+      <div class="list" *ngIf="notifications.length; else noNotifications">
+        <div class="pill notification" *ngFor="let notification of notifications">
+          <div class="notification-title">{{ notification.message }}</div>
+          <div class="notification-meta">
+            {{ notification.type }} · {{ notification.occurredAtUtc | date: 'short' }}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noNotifications>
+      <div class="pill muted">Nessuna notifica ricevuta.</div>
+    </ng-template>
+  </section>
+
   <section class="grid">
     <div class="card">
       <h2>Login</h2>

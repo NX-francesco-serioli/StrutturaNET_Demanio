@@ -3,6 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService, AuthResponse } from './auth.service';
+import { NotificationService } from './notification.service';
 import { environment } from '../environments/environment';
 import { catchError, of, tap } from 'rxjs';
 
@@ -17,9 +18,11 @@ export class AppComponent implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly fb = inject(FormBuilder);
   private readonly http = inject(HttpClient);
+  private readonly notifications = inject(NotificationService);
   private readonly apiBase = environment.apiBaseUrl;
 
   readonly user$ = this.auth.currentUser$;
+  readonly notifications$ = this.notifications.notifications$;
 
   statusMessage = '';
   adminUsers: { id: string; email: string; displayName?: string }[] = [];
