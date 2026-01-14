@@ -91,6 +91,7 @@ services:
     container_name: adsp_mds_demaniodigitale_worker
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Host=db;Port=5432;Database=adsp_mds_demaniodigitale;Username=adspadmin;Password=Nexus2025!
       RabbitMq__Host: rabbitmq
       RabbitMq__Username: admin
       RabbitMq__Password: Nexus2025!

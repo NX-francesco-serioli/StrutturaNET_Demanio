@@ -43,6 +43,9 @@ var api = builder.AddProject<Projects.Api>("api")
 
 var worker = builder.AddProject<Projects.Worker>("worker")
     .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")
+    .WithEnvironment(
+        "ConnectionStrings__DefaultConnection",
+        "Host=localhost;Port=55432;Database=adsp_mds_demaniodigitale;Username=adspadmin;Password=Nexus2025!")
     .WithEnvironment("RabbitMq__Host", "localhost")
     .WithEnvironment("RabbitMq__Username", "admin")
     .WithEnvironment("RabbitMq__Password", "Nexus2025!")

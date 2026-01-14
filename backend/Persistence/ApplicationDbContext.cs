@@ -9,6 +9,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     : IdentityDbContext<ApplicationUser, IdentityRole, string>(options)
 {
     public DbSet<UserPermission> UserPermissions => Set<UserPermission>();
+    public DbSet<EmailOutboxMessage> EmailOutboxMessages => Set<EmailOutboxMessage>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -33,6 +34,26 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
                 .WithMany(u => u.Permissions)
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<EmailOutboxMessage>(entity =>
+        {
+            entity.ToTable("EmailOutboxMessages", "messaging");
+            entity.HasKey(m => m.Id);
+            entity.Property(m => m.To).IsRequired().HasMaxLength(320);
+            entity.Property(m => m.Subject).IsRequired().HasMaxLength(256);
+            entity.Property(m => m.Body).IsRequired();
+            entity.Property(m => m.HtmlBody);
+            entity.Property(m => m.Template).HasMaxLength(128);
+            entity.Property(m => m.PayloadJson);
+            entity.Property(m => m.CcJson);
+            entity.Property(m => m.BccJson);
+            entity.Property(m => m.ReplyTo).HasMaxLength(320);
+            entity.Property(m => m.AttachmentsJson);
+            entity.Property(m => m.Status).IsRequired().HasMaxLength(32);
+            entity.Property(m => m.LastError).HasMaxLength(1024);
+            entity.Property(m => m.CreatedAtUtc).IsRequired();
+            entity.HasIndex(m => new { m.Status, m.NextAttemptAtUtc });
         });
     }
 }

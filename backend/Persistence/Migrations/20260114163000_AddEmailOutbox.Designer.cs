@@ -3,6 +3,7 @@ using System;
 using AdSPMdS.DemanioDigitale.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AdSPMdS.DemanioDigitale.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260114163000_AddEmailOutbox")]
+    partial class AddEmailOutbox
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,24 +101,12 @@ namespace AdSPMdS.DemanioDigitale.Persistence.Migrations
                     b.Property<int>("AttemptCount")
                         .HasColumnType("integer");
 
-                    b.Property<string>("AttachmentsJson")
-                        .HasColumnType("text");
-
-                    b.Property<string>("BccJson")
-                        .HasColumnType("text");
-
                     b.Property<string>("Body")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("CcJson")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("HtmlBody")
-                        .HasColumnType("text");
 
                     b.Property<string>("LastError")
                         .HasMaxLength(1024)
@@ -129,10 +120,6 @@ namespace AdSPMdS.DemanioDigitale.Persistence.Migrations
 
                     b.Property<string>("PayloadJson")
                         .HasColumnType("text");
-
-                    b.Property<string>("ReplyTo")
-                        .HasMaxLength(320)
-                        .HasColumnType("character varying(320)");
 
                     b.Property<DateTime?>("SentAtUtc")
                         .HasColumnType("timestamp with time zone");

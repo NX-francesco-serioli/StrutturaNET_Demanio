@@ -5,7 +5,7 @@ Questo repository contiene una soluzione full-stack con backend .NET, frontend A
 ## Struttura e layer
 
 ### Backend
-- Api: espone le API REST, autenticazione/autorità, Swagger/OpenAPI.
+- Api: espone le API REST, autenticazione/autorizzazione, Swagger/OpenAPI.
 - Worker: servizio background per elaborazioni asincrone e consumatori MassTransit.
 - Application: logica applicativa, eventi, opzioni e servizi di dominio.
 - Domain: entita', value object e regole di business.
@@ -19,6 +19,7 @@ Questo repository contiene una soluzione full-stack con backend .NET, frontend A
 ### Messaging e notifiche
 - RabbitMQ come broker per eventi asincroni (MassTransit).
 - Notifiche realtime via SignalR: gli eventi backend vengono inoltrati ai client connessi.
+- Email outbox: le email vengono accodate su DB e processate in background dal Worker (metadata JSON per cc/bcc e allegati, solo riferimenti).
 
 ## Ambienti di esecuzione
 
@@ -53,3 +54,5 @@ docker compose down
 - Broker: RabbitMQ.
 - Auth: ASP.NET Identity + JWT.
 - Realtime: SignalR Hub `/hubs/notifications`.
+- Email: outbox su DB + worker asincrono (provider esterno da configurare).
+
