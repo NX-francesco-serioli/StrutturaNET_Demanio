@@ -3,6 +3,7 @@ using AdSPMdS.DemanioDigitale.Worker.Consumers;
 using MassTransit;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Trace;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -16,6 +17,13 @@ builder.Logging.AddOpenTelemetry(logging =>
         logging.AddOtlpExporter();
     }
 });
+
+
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing =>
+    {
+        tracing.AddSource("MassTransit");
+    });
 
 builder.Services.AddOptions<RabbitMqOptions>()
     .Bind(builder.Configuration.GetSection("RabbitMq"))
@@ -51,3 +59,6 @@ builder.Services.AddMassTransit(configurator =>
 
 var host = builder.Build();
 host.Run();
+
+
+
