@@ -1,7 +1,7 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
 var db = builder.AddContainer("db", "postgis/postgis", "16-3.4")
-    .WithContainerName("adsp_mds_demaniodigitale_db")
+    .WithContainerName("adsp_mds_demaniodigitale_db_local")
     .WithEnvironment("POSTGRES_USER", "adspadmin")
     .WithEnvironment("POSTGRES_PASSWORD", "Nexus2025!")
     .WithEnvironment("POSTGRES_DB", "adsp_mds_demaniodigitale")
@@ -12,17 +12,17 @@ var db = builder.AddContainer("db", "postgis/postgis", "16-3.4")
         name: "postgres",
         isExternal: true,
         isProxied: false)
-    .WithVolume("adsp_mds_data", "/var/lib/postgresql/data");
+    .WithVolume("adsp_mds_demaniodigitale_db_data_local", "/var/lib/postgresql/data");
 
 var rabbit = builder.AddContainer("rabbitmq", "rabbitmq", "3.13-management")
-    .WithContainerName("adsp_mds_demaniodigitale_rabbitmq")
+    .WithContainerName("adsp_mds_demaniodigitale_rabbitmq_local")
     .WithEnvironment("RABBITMQ_DEFAULT_USER", "admin")
     .WithEnvironment("RABBITMQ_DEFAULT_PASS", "Nexus2025!")
     .WithEntrypoint("sh")
     .WithArgs("-c", "rabbitmq-plugins enable --offline rabbitmq_shovel rabbitmq_shovel_management && rabbitmq-server")
     .WithEndpoint(name: "amqp", targetPort: 5672, port: 5672, isExternal: true, isProxied: false)
     .WithEndpoint(name: "ui", targetPort: 15672, scheme: "http", isExternal: true, isProxied: false)
-    .WithVolume("adsp_mds_rabbitmq_data", "/var/lib/rabbitmq");
+    .WithVolume("adsp_mds_demaniodigitale_rabbitmq_data_local", "/var/lib/rabbitmq");
 
 var api = builder.AddProject<Projects.Api>("api")
     .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")

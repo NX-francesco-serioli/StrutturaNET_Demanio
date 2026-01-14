@@ -46,7 +46,6 @@ services:
       RabbitMq__Username: admin
       RabbitMq__Password: Nexus2025!
       RabbitMq__VirtualHost: /
-      DOTNET_USE_POLLING_FILE_WATCHER: "1"
     depends_on:
       - db
       - rabbitmq
@@ -55,7 +54,7 @@ services:
     volumes:
       - ./:/src
     working_dir: /src/backend/Api
-    command: ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:8080"]
+    command: ["dotnet", "run", "--urls", "http://0.0.0.0:8080"]
 
   frontend:
     build:
@@ -96,15 +95,16 @@ services:
       RabbitMq__Username: admin
       RabbitMq__Password: Nexus2025!
       RabbitMq__VirtualHost: /
-      DOTNET_USE_POLLING_FILE_WATCHER: "1"
     depends_on:
       - rabbitmq
     volumes:
       - ./:/src
     working_dir: /src/backend/Worker
-    command: ["dotnet", "watch", "run"]
+    command: ["dotnet", "run"]
 
 volumes:
   adsp_mds_demaniodigitale_db_data:
   adsp_mds_demaniodigitale_frontend_node_modules:
   adsp_mds_demaniodigitale_rabbitmq_data:
+
+
