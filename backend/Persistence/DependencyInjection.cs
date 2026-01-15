@@ -25,7 +25,7 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("DefaultConnection not found");
 
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddDbContext<DemanioDbContext>(options =>
             options.UseNpgsql(connectionString, npgsql => npgsql.UseNetTopologySuite()));
 
         return services;

@@ -6,9 +6,9 @@ namespace AdSPMdS.DemanioDigitale.Persistence.Repositories;
 
 public class UserPermissionRepository : IUserPermissionRepository
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly DemanioDbContext _dbContext;
 
-    public UserPermissionRepository(ApplicationDbContext dbContext)
+    public UserPermissionRepository(DemanioDbContext dbContext)
     {
         _dbContext = dbContext;
     }

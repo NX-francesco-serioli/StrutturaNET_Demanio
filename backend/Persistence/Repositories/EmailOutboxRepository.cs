@@ -7,9 +7,9 @@ namespace AdSPMdS.DemanioDigitale.Persistence.Repositories;
 
 public class EmailOutboxRepository : IEmailOutboxRepository
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly DemanioDbContext _dbContext;
 
-    public EmailOutboxRepository(ApplicationDbContext dbContext)
+    public EmailOutboxRepository(DemanioDbContext dbContext)
     {
         _dbContext = dbContext;
     }

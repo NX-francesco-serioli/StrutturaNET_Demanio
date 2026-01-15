@@ -19,7 +19,7 @@ public static class AuthConfiguration
                 options.Password.RequiredLength = 6;
             })
             .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddEntityFrameworkStores<DemanioDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();
 

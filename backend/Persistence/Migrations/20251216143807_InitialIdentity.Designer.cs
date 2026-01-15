@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AdSPMdS.DemanioDigitale.Persistence.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(DemanioDbContext))]
     [Migration("20251216143807_InitialIdentity")]
     partial class InitialIdentity
     {

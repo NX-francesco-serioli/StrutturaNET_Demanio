@@ -103,7 +103,7 @@ void RegisterServices(WebApplicationBuilder appBuilder)
 static async Task EnsureDatabaseAsync(IServiceProvider services, IConfiguration configuration)
 {
     using var scope = services.CreateScope();
-    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var context = scope.ServiceProvider.GetRequiredService<DemanioDbContext>();
 
     await context.Database.MigrateAsync();
 

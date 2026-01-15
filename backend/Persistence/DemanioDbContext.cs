@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdSPMdS.DemanioDigitale.Persistence;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+public class DemanioDbContext(DbContextOptions<DemanioDbContext> options)
     : IdentityDbContext<ApplicationUser, IdentityRole, string>(options)
 {
     public DbSet<UserPermission> UserPermissions => Set<UserPermission>();
@@ -14,6 +14,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+        builder.ApplyConfigurationsFromAssembly(typeof(DemanioDbContext).Assembly);
     }
 }
