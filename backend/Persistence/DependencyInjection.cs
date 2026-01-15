@@ -1,6 +1,5 @@
-using AdSPMdS.DemanioDigitale.Domain.Auth;
-using AdSPMdS.DemanioDigitale.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
+using AdSPMdS.DemanioDigitale.Application.Repositories;
+using AdSPMdS.DemanioDigitale.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,35 +12,29 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddPersistenceDbContext(configuration);
+        services.AddPersistenceRepositories();
+
+        return services;
+    }
+
+    internal static IServiceCollection AddPersistenceDbContext(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
         var connectionString = configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("DefaultConnection not found");
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(connectionString, npgsql => npgsql.UseNetTopologySuite()));
 
-        services
-            .AddIdentityCore<ApplicationUser>(options =>
-            {
-                options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequiredLength = 6;
-            })
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddSignInManager()
-            .AddDefaultTokenProviders();
+        return services;
+    }
 
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy(Permissions.ManageUsers, policy =>
-                policy.RequireRole(Roles.Admin)
-                      .RequireClaim(Permissions.PermissionClaimType, Permissions.ManageUsers));
-
-            options.AddPolicy(Permissions.ViewReports, policy =>
-                policy.RequireClaim(Permissions.PermissionClaimType, Permissions.ViewReports));
-        });
+    internal static IServiceCollection AddPersistenceRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<IEmailOutboxRepository, EmailOutboxRepository>();
+        services.AddScoped<IUserPermissionRepository, UserPermissionRepository>();
 
         return services;
     }

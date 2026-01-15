@@ -56,6 +56,7 @@ void RegisterServices(WebApplicationBuilder appBuilder)
 {
     appBuilder.Services.AddApplication();
     appBuilder.Services.AddPersistence(appBuilder.Configuration);
+    appBuilder.Services.AddIdentityAndAuthorization();
     appBuilder.Services.AddJwtAuthentication(appBuilder.Configuration);
     appBuilder.Services.AddSwaggerDocumentation();
     appBuilder.Services.AddSignalR();

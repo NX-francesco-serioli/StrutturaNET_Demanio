@@ -1,10 +1,9 @@
 using AdSPMdS.DemanioDigitale.Application.Options;
 using AdSPMdS.DemanioDigitale.Worker.Consumers;
 using AdSPMdS.DemanioDigitale.Worker.Services;
-using AdSPMdS.DemanioDigitale.Persistence;
 using AdSPMdS.DemanioDigitale.Application.Emails;
+using AdSPMdS.DemanioDigitale.Persistence;
 using MassTransit;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
@@ -33,11 +32,7 @@ builder.Services.AddOptions<RabbitMqOptions>()
     .Bind(builder.Configuration.GetSection("RabbitMq"))
     .ValidateDataAnnotations();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("DefaultConnection not found");
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString, npgsql => npgsql.UseNetTopologySuite()));
+builder.Services.AddPersistence(builder.Configuration);
 
 builder.Services.AddSingleton<IEmailSender, NoopEmailSender>();
 builder.Services.AddHostedService<EmailOutboxWorker>();

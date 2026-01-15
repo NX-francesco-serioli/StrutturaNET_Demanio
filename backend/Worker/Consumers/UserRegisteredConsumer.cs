@@ -1,21 +1,21 @@
 using AdSPMdS.DemanioDigitale.Application.Emails;
 using AdSPMdS.DemanioDigitale.Application.Events;
 using AdSPMdS.DemanioDigitale.Domain.Entities;
-using AdSPMdS.DemanioDigitale.Persistence;
+using AdSPMdS.DemanioDigitale.Application.Repositories;
 using MassTransit;
 
 namespace AdSPMdS.DemanioDigitale.Worker.Consumers;
 
 public class UserRegisteredConsumer : IConsumer<UserRegisteredEvent>
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IEmailOutboxRepository _outboxRepository;
     private readonly ILogger<UserRegisteredConsumer> _logger;
 
     public UserRegisteredConsumer(
-        ApplicationDbContext dbContext,
+        IEmailOutboxRepository outboxRepository,
         ILogger<UserRegisteredConsumer> logger)
     {
-        _dbContext = dbContext;
+        _outboxRepository = outboxRepository;
         _logger = logger;
     }
 
@@ -49,7 +49,6 @@ public class UserRegisteredConsumer : IConsumer<UserRegisteredEvent>
             message.Email,
             message.UserId);
 
-        _dbContext.EmailOutboxMessages.Add(outboxMessage);
-        return _dbContext.SaveChangesAsync(context.CancellationToken);
+        return _outboxRepository.AddAsync(outboxMessage, context.CancellationToken);
     }
 }
