@@ -68,7 +68,7 @@ var worker = builder.AddProject<Worker>("worker")
     .WithEnvironment("RabbitMq__VirtualHost", "/")
     .WaitFor(rabbit);
 
-builder.AddExecutable("frontend", "npm", "../../frontend", "run", "start:local_https")
+builder.AddExecutable("frontend", "npm", "../../frontend-angular", "run", "start:local_https")
     .WithEnvironment("NODE_ENV", "development")
     .WithEndpoint(
         targetPort: 4200,
@@ -81,3 +81,4 @@ builder.AddExecutable("frontend", "npm", "../../frontend", "run", "start:local_h
     .WaitFor(api);
 
 builder.Build().Run();
+

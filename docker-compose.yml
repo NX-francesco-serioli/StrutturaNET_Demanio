@@ -73,7 +73,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ./frontend-angular
       dockerfile: Dockerfile
     container_name: adsp_mds_demaniodigitale_frontend
     environment:
@@ -83,7 +83,7 @@ services:
     depends_on:
       - api
     volumes:
-      - ./frontend:/app
+      - ./frontend-angular:/app
       - adsp_mds_demaniodigitale_frontend_node_modules:/app/node_modules
     working_dir: /app
     command: ["npm", "run", "start", "--", "--host", "0.0.0.0", "--port", "4200", "--disable-host-check"]
@@ -123,5 +123,6 @@ volumes:
   adsp_mds_demaniodigitale_frontend_node_modules:
   adsp_mds_demaniodigitale_rabbitmq_data:
   adsp_mds_demaniodigitale_azurite_data:
+
 
 
