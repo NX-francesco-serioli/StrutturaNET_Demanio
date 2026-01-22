@@ -1,3 +1,5 @@
+using Projects;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
 var db = builder.AddContainer("db", "postgis/postgis", "16-3.4")
@@ -33,7 +35,7 @@ var azurite = builder.AddContainer("azurite", "mcr.microsoft.com/azure-storage/a
     .WithEndpoint(name: "blob", targetPort: 10000, port: 10000, scheme: "http", isExternal: true, isProxied: false)
     .WithVolume("adsp_mds_demaniodigitale_azurite_data_local", "/data");
 
-var api = builder.AddProject<Projects.Api>("api")
+var api = builder.AddProject<Api>("api")
     .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")
     .WithEnvironment(
         "ConnectionStrings__DefaultConnection",
@@ -55,7 +57,7 @@ var api = builder.AddProject<Projects.Api>("api")
     .WaitFor(rabbit)
     .WaitFor(azurite);
 
-var worker = builder.AddProject<Projects.Worker>("worker")
+var worker = builder.AddProject<Worker>("worker")
     .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")
     .WithEnvironment(
         "ConnectionStrings__DefaultConnection",
@@ -66,7 +68,7 @@ var worker = builder.AddProject<Projects.Worker>("worker")
     .WithEnvironment("RabbitMq__VirtualHost", "/")
     .WaitFor(rabbit);
 
-builder.AddExecutable("frontend", "npm", "../frontend", "run", "start:local_https")
+builder.AddExecutable("frontend", "npm", "../../frontend", "run", "start:local_https")
     .WithEnvironment("NODE_ENV", "development")
     .WithEndpoint(
         targetPort: 4200,

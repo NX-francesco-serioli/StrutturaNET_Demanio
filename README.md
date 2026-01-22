@@ -25,9 +25,9 @@ Questo repository contiene una soluzione full-stack con backend .NET, frontend A
 ## Ambienti di esecuzione
 
 ### Locale con Aspire (AppHost)
-- AppHost avvia i servizi backend e i container infrastrutturali (Postgres/PostGIS, RabbitMQ).
+- AppHost (aspire/AppHost) avvia i servizi backend e i container infrastrutturali (Postgres/PostGIS, RabbitMQ).
 - Usato per sviluppo locale in Visual Studio.
-- File: `AppHost/Program.cs`.
+- File: `aspire/AppHost/Program.cs`.
 
 ### Docker Compose
 - Avvio completo in container (db, rabbitmq, api, worker, frontend, nginx).
@@ -57,5 +57,8 @@ docker compose down
 - Realtime: SignalR Hub `/hubs/notifications`.
 - Email: outbox su DB + worker asincrono (provider esterno da configurare).
 - Storage: Azure Blob (Azurite in locale).
+
+
+
 
 
