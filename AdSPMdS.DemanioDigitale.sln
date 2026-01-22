@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.2.11408.102 d18.0
+VisualStudioVersion = 18.2.11408.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}"
 EndProject
@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "backend\Appl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "backend\Api\Api.csproj", "{240EF09A-5204-476F-9BFE-B7B85ADF2CDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppHost", "aspire\\AppHost\\AppHost.csproj", "{DC1786C9-7AF5-4A42-8DF2-9CFA88410D81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppHost", "aspire\AppHost\AppHost.csproj", "{DC1786C9-7AF5-4A42-8DF2-9CFA88410D81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "backend\Persistence\Persistence.csproj", "{EA86B9A1-5A52-491E-86F3-25D27F041728}"
 EndProject
@@ -22,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Directory.Packages.props = Directory.Packages.props
 		docker-compose.yml = docker-compose.yml
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDefaults", "backend\ServiceDefaults\ServiceDefaults.csproj", "{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}"
@@ -125,9 +126,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{DC1786C9-7AF5-4A42-8DF2-9CFA88410D81} = {B1E9F0B0-7AF9-4F9E-8C4B-0D2A5D8BA5A9}
 		{66CCF4D9-B92D-412D-AB01-4E3289116E72} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
 		{240EF09A-5204-476F-9BFE-B7B85ADF2CDF} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
+		{DC1786C9-7AF5-4A42-8DF2-9CFA88410D81} = {B1E9F0B0-7AF9-4F9E-8C4B-0D2A5D8BA5A9}
 		{EA86B9A1-5A52-491E-86F3-25D27F041728} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
 		{52162B2C-51E4-4765-BC30-388C96019C3B} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
 		{7C22E353-1E0B-4E3F-82D2-3F8C211CBEB9} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
@@ -137,6 +138,3 @@ Global
 		SolutionGuid = {9933262B-98AA-4449-8E96-89C4944E6D6B}
 	EndGlobalSection
 EndGlobal
-
-
-
