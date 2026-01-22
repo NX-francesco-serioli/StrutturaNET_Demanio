@@ -10,7 +10,7 @@ Questo repository contiene una soluzione full-stack con backend .NET, frontend A
 - Application: logica applicativa, eventi, opzioni e servizi di dominio.
 - Domain: entita', value object e regole di business.
 - Persistence: accesso dati (EF Core, Postgres/PostGIS).
-- ServiceDefaults: configurazioni comuni (telemetria, health checks, service discovery).
+- ServiceDefaults (backend/ServiceDefaults): configurazioni comuni (telemetria, health checks, service discovery).
 - Storage allegati: Azure Blob Storage (in locale tramite Azurite).
 
 ### Frontend
@@ -57,4 +57,5 @@ docker compose down
 - Realtime: SignalR Hub `/hubs/notifications`.
 - Email: outbox su DB + worker asincrono (provider esterno da configurare).
 - Storage: Azure Blob (Azurite in locale).
+
 

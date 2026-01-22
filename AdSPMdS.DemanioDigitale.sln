@@ -1,7 +1,6 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11408.102 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}"
 EndProject
@@ -10,8 +9,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "backend\Api\Api.csproj", "{240EF09A-5204-476F-9BFE-B7B85ADF2CDF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppHost", "AppHost\AppHost.csproj", "{DC1786C9-7AF5-4A42-8DF2-9CFA88410D81}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDefaults", "ServiceDefaults\ServiceDefaults.csproj", "{42644A61-918E-41C3-B660-ED21A17367EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "backend\Persistence\Persistence.csproj", "{EA86B9A1-5A52-491E-86F3-25D27F041728}"
 EndProject
@@ -24,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Packages.props = Directory.Packages.props
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDefaults", "backend\ServiceDefaults\ServiceDefaults.csproj", "{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,18 +70,6 @@ Global
 		{DC1786C9-7AF5-4A42-8DF2-9CFA88410D81}.Release|x64.Build.0 = Release|Any CPU
 		{DC1786C9-7AF5-4A42-8DF2-9CFA88410D81}.Release|x86.ActiveCfg = Release|Any CPU
 		{DC1786C9-7AF5-4A42-8DF2-9CFA88410D81}.Release|x86.Build.0 = Release|Any CPU
-		{42644A61-918E-41C3-B660-ED21A17367EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42644A61-918E-41C3-B660-ED21A17367EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42644A61-918E-41C3-B660-ED21A17367EE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{42644A61-918E-41C3-B660-ED21A17367EE}.Debug|x64.Build.0 = Debug|Any CPU
-		{42644A61-918E-41C3-B660-ED21A17367EE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{42644A61-918E-41C3-B660-ED21A17367EE}.Debug|x86.Build.0 = Debug|Any CPU
-		{42644A61-918E-41C3-B660-ED21A17367EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42644A61-918E-41C3-B660-ED21A17367EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42644A61-918E-41C3-B660-ED21A17367EE}.Release|x64.ActiveCfg = Release|Any CPU
-		{42644A61-918E-41C3-B660-ED21A17367EE}.Release|x64.Build.0 = Release|Any CPU
-		{42644A61-918E-41C3-B660-ED21A17367EE}.Release|x86.ActiveCfg = Release|Any CPU
-		{42644A61-918E-41C3-B660-ED21A17367EE}.Release|x86.Build.0 = Release|Any CPU
 		{EA86B9A1-5A52-491E-86F3-25D27F041728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EA86B9A1-5A52-491E-86F3-25D27F041728}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA86B9A1-5A52-491E-86F3-25D27F041728}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -119,6 +106,18 @@ Global
 		{7C22E353-1E0B-4E3F-82D2-3F8C211CBEB9}.Release|x64.Build.0 = Release|Any CPU
 		{7C22E353-1E0B-4E3F-82D2-3F8C211CBEB9}.Release|x86.ActiveCfg = Release|Any CPU
 		{7C22E353-1E0B-4E3F-82D2-3F8C211CBEB9}.Release|x86.Build.0 = Release|Any CPU
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}.Debug|x64.Build.0 = Debug|Any CPU
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}.Debug|x86.Build.0 = Debug|Any CPU
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}.Release|x64.ActiveCfg = Release|Any CPU
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}.Release|x64.Build.0 = Release|Any CPU
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}.Release|x86.ActiveCfg = Release|Any CPU
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +128,7 @@ Global
 		{EA86B9A1-5A52-491E-86F3-25D27F041728} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
 		{52162B2C-51E4-4765-BC30-388C96019C3B} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
 		{7C22E353-1E0B-4E3F-82D2-3F8C211CBEB9} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
+		{E0324CD9-C6D2-8E0E-2F36-CFA499253ADB} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9933262B-98AA-4449-8E96-89C4944E6D6B}
