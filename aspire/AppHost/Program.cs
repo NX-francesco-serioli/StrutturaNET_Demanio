@@ -66,6 +66,7 @@ var worker = builder.AddProject<Worker>("worker")
     .WithEnvironment("RabbitMq__Username", "admin")
     .WithEnvironment("RabbitMq__Password", "Nexus2025!")
     .WithEnvironment("RabbitMq__VirtualHost", "/")
+    .WaitFor(db)
     .WaitFor(rabbit);
 
 builder.AddExecutable("frontend", "npm", "../../frontend-angular", "run", "start:local_https")
@@ -77,7 +78,6 @@ builder.AddExecutable("frontend", "npm", "../../frontend-angular", "run", "start
         name: "frontend-https",
         isExternal: true,
         isProxied: false)
-    .WaitFor(db)
     .WaitFor(api);
 
 builder.Build().Run();
